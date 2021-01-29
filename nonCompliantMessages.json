@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {},
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Authorization/policyAssignments",
+            "apiVersion": "2020-09-01",
+            "name": "Non",
+            "location": "westeurope",
+            "properties": {
+                "displayName": "Non compliant message",
+                "policyDefinitionId": "/providers/Microsoft.Authorization/policyDefinitions/e56962a6-4747-49cd-b67b-bf8b01975c4c",
+                "nonComplianceMessages": [
+                    {
+                        "message": "my bad"
+                    }
+                ],
+                "parameters": {
+                    "listOfAllowedLocations": {
+                        "value": [
+                            "westeurope"
+                        ]
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {}
+}

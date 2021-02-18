@@ -1,0 +1,52 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-08-01/managementGroupDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "rbacName": {
+            "type": "string",
+            "defaultValue": "template specs contributor"
+        },
+        "roleAssignemtScope": {
+            "type": "string",
+            "defaultValue": "hippo"
+        }
+    },
+    "functions": [],
+    "variables": {
+        "RbacGuid": "[concat(guid(parameters('rbacName'),parameters('roleAssignemtScope'),'1'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Authorization/roleDefinitions",
+            "apiVersion": "2018-01-01-preview",
+            "location": "[deployment().location]",
+            "name": "[variables('RbacGuid')]",
+            "properties": {
+                "roleName": "[parameters('rbacName')]",
+                "description": "TemplateSpecs contributor role",
+                "type": "customRole",
+                "permissions": [
+                    {
+                        "actions": [
+                            "*/read",
+                            "Microsoft.Resources/templateSpecs/read",
+                            "Microsoft.Resources/templateSpecs/write",
+                            "Microsoft.Resources/templateSpecs/delete",
+                            "Microsoft.Resources/templateSpecs/versions/read",
+                            "Microsoft.Resources/templateSpecs/versions/write",
+                            "Microsoft.Resources/templateSpecs/versions/delete"
+                        ],
+                        "notActions": [
+                        ],
+                        "dataActions": [],
+                        "notDataActions": []
+                    }
+                ],
+                "assignableScopes": [
+                    "[concat('/providers/Microsoft.Management/managementGroups/',parameters('roleAssignemtScope'))]"
+                ]
+            }
+        }
+    ],
+    "outputs": {}
+}

@@ -1,0 +1,31 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "rgName": {
+            "type": "array",
+            "metadata": {
+                "description": ""
+            },
+            "defaultValue": [
+                "aaa",
+                "bbb"
+            ]
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2020-10-01",
+            "location": "[deployment().location]",
+            "name": "[parameters('rgName')[copyIndex('rgName')]]",
+            "copy": {
+                "name": "rgName",
+                "count": "[length(parameters('rgName'))]"
+            }
+        }
+    ],
+    "outputs": {}
+}
